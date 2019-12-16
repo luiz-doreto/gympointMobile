@@ -26,11 +26,11 @@ export default createAppContainer(
                     }),
                     navigationOptions: {
                         tabBarLabel: 'Pedir ajuda',
-                        tabBarIcon: (
+                        tabBarIcon: ({ tintColor }) => (
                             <Icon
-                                name="add-circle-outline"
+                                name="live-help"
                                 size={20}
-                                color="rgba(255, 255, 255, 0.6)"
+                                color={tintColor}
                             />
                         ),
                     },
