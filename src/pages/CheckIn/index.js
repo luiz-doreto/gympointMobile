@@ -42,6 +42,7 @@ export default function CheckIn() {
         try {
             await api.post(`students/${10}/checkins`);
             loadCheckins();
+            Alert.alert('Sucesso', 'Check-in realizado com sucesso!');
         } catch (error) {
             console.tron.log(error);
             Alert.alert(

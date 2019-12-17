@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import SignIn from '~/pages/SignIn';
 import CheckIn from '~/pages/CheckIn';
 import HelpOrderList from '~/pages/HelpOrder/List';
-import HelpOrderAnswer from '~/pages/HelpOrder/Answer';
+import HelpOrderShow from '~/pages/HelpOrder/Show';
 import HelpOrderNew from '~/pages/HelpOrder/New';
 
 export default createAppContainer(
@@ -21,7 +21,7 @@ export default createAppContainer(
                 HelpOrder: {
                     screen: createStackNavigator({
                         HelpOrderList,
-                        HelpOrderAnswer,
+                        HelpOrderShow,
                         HelpOrderNew,
                     }),
                     navigationOptions: {
