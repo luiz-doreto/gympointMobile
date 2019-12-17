@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Alert } from 'react-native';
+import { Alert, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import Background from '~/components/Background';
 import { Container, TextArea, SubmitButton } from './styles';
 import api from '~/services/api';
 
@@ -27,20 +27,16 @@ export default function HelpOrderNew({ navigation }) {
     }
 
     return (
-        <Background>
-            <Container>
-                <TextArea
-                    multiline
-                    numberOfLines={10}
-                    placeholder="Inclua seu pedido de auxílio"
-                    value={question}
-                    onChangeText={setQuestion}
-                />
-                <SubmitButton onPress={handleSubmit}>
-                    Enviar pedido
-                </SubmitButton>
-            </Container>
-        </Background>
+        <Container>
+            <TextArea
+                multiline
+                numberOfLines={10}
+                placeholder="Inclua seu pedido de auxílio"
+                value={question}
+                onChangeText={setQuestion}
+            />
+            <SubmitButton onPress={handleSubmit}>Enviar pedido</SubmitButton>
+        </Container>
     );
 }
 
@@ -49,3 +45,11 @@ HelpOrderNew.propTypes = {
         navigate: PropTypes.func,
     }).isRequired,
 };
+
+HelpOrderNew.navigationOptions = ({ navigation }) => ({
+    headerLeft: () => (
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Icon name="chevron-left" size={30} color="#ee4e62" />
+        </TouchableOpacity>
+    ),
+});

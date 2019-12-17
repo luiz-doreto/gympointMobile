@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+import Header from '~/components/Header';
 import SignIn from '~/pages/SignIn';
 import CheckIn from '~/pages/CheckIn';
 import HelpOrderList from '~/pages/HelpOrder/List';
@@ -19,11 +20,21 @@ export default createAppContainer(
             {
                 CheckIn,
                 HelpOrder: {
-                    screen: createStackNavigator({
-                        HelpOrderList,
-                        HelpOrderShow,
-                        HelpOrderNew,
-                    }),
+                    screen: createStackNavigator(
+                        {
+                            HelpOrderList,
+                            HelpOrderShow,
+                            HelpOrderNew,
+                        },
+                        {
+                            defaultNavigationOptions: {
+                                headerTitle: () => <Header />,
+                                headerLeftContainerStyle: {
+                                    marginLeft: 20,
+                                },
+                            },
+                        }
+                    ),
                     navigationOptions: {
                         tabBarLabel: 'Pedir ajuda',
                         tabBarIcon: ({ tintColor }) => (

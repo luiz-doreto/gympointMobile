@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { formatRelative, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 
-import Background from '~/components/Background';
 import {
     Container,
     ButtonNew,
@@ -54,40 +53,38 @@ function HelpOrderList({ navigation, isFocused }) {
     }
 
     return (
-        <Background>
-            <Container>
-                <ButtonNew onPress={handleNewHelpOrder}>
-                    Novo pedido de auxílio
-                </ButtonNew>
-                {loading ? (
-                    <ActivityIndicator size="large" color="#999" />
-                ) : (
-                    <HelpOrdersList
-                        data={helpOrders}
-                        keyExtractor={item => String(item.id)}
-                        renderItem={({ item }) => (
-                            <HelpOrderItem
-                                onPress={() => handlePressHelpOrder(item)}
-                            >
-                                <Header>
-                                    <Status answered={item.answer_at}>
-                                        {item.answer_at
-                                            ? 'Respondido'
-                                            : 'Sem resposta'}
-                                    </Status>
-                                    <Time>{item.time}</Time>
-                                </Header>
-                                <ContentContainer>
-                                    <Content numberOfLines={3}>
-                                        {item.question}
-                                    </Content>
-                                </ContentContainer>
-                            </HelpOrderItem>
-                        )}
-                    />
-                )}
-            </Container>
-        </Background>
+        <Container>
+            <ButtonNew onPress={handleNewHelpOrder}>
+                Novo pedido de auxílio
+            </ButtonNew>
+            {loading ? (
+                <ActivityIndicator size="large" color="#999" />
+            ) : (
+                <HelpOrdersList
+                    data={helpOrders}
+                    keyExtractor={item => String(item.id)}
+                    renderItem={({ item }) => (
+                        <HelpOrderItem
+                            onPress={() => handlePressHelpOrder(item)}
+                        >
+                            <Header>
+                                <Status answered={item.answer_at}>
+                                    {item.answer_at
+                                        ? 'Respondido'
+                                        : 'Sem resposta'}
+                                </Status>
+                                <Time>{item.time}</Time>
+                            </Header>
+                            <ContentContainer>
+                                <Content numberOfLines={3}>
+                                    {item.question}
+                                </Content>
+                            </ContentContainer>
+                        </HelpOrderItem>
+                    )}
+                />
+            )}
+        </Container>
     );
 }
 

@@ -8,5 +8,5 @@ export const Container = styled.SafeAreaView`
 `;
 
 export const Logo = styled.Image`
-    margin: 20px 0;
+    margin: 13px 0;
 `;
