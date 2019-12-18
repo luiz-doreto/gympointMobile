@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import logo from '~/assets/logo-header.png';
 import {
@@ -23,3 +24,7 @@ export default function Header({ onLogout }) {
         </Container>
     );
 }
+
+Header.propTypes = {
+    onLogout: PropTypes.func.isRequired,
+};
