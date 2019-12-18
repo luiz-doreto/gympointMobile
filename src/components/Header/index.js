@@ -1,12 +1,25 @@
 import React from 'react';
 
 import logo from '~/assets/logo-header.png';
-import { Container, Logo } from './styles';
+import {
+    Container,
+    LeftContainer,
+    LogoContainer,
+    Logo,
+    RightContainer,
+    Logout,
+} from './styles';
 
-export default function Header() {
+export default function Header({ onLogout }) {
     return (
         <Container>
-            <Logo source={logo} />
+            <LeftContainer />
+            <LogoContainer>
+                <Logo source={logo} />
+            </LogoContainer>
+            <RightContainer onPress={onLogout}>
+                <Logout>logout</Logout>
+            </RightContainer>
         </Container>
     );
 }

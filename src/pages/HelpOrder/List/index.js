@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ActivityIndicator } from 'react-native';
+import { useSelector } from 'react-redux';
 import { withNavigationFocus } from 'react-navigation';
 import PropTypes from 'prop-types';
 import { formatRelative, parseISO } from 'date-fns';
@@ -19,12 +20,13 @@ import {
 import api from '~/services/api';
 
 function HelpOrderList({ navigation, isFocused }) {
+    const studentId = useSelector(state => state.auth.studentId);
     const [helpOrders, setHelpOrders] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    async function loadHelpOrders() {
+    async function loadHelpOrders(id) {
         setLoading(true);
-        const response = await api.get(`students/${10}/help-orders`);
+        const response = await api.get(`students/${id}/help-orders`);
 
         const data = response.data.map(ho => ({
             ...ho,
@@ -40,9 +42,9 @@ function HelpOrderList({ navigation, isFocused }) {
 
     useEffect(() => {
         if (isFocused) {
-            loadHelpOrders();
+            loadHelpOrders(studentId);
         }
-    }, [isFocused]);
+    }, [isFocused, studentId]);
 
     function handlePressHelpOrder(helpOrder) {
         navigation.navigate('HelpOrderShow', { helpOrder });

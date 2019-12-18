@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { formatRelative, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 
-import Background from '~/components/Background';
+import Header from '~/components/Header';
 import {
     Container,
+    Content,
     CheckinButton,
     CheckinList,
     CheckinItem,
@@ -14,14 +16,18 @@ import {
     CheckinDate,
 } from './styles';
 import api from '~/services/api';
+import { signOut } from '~/store/modules/auth/actions';
 
 export default function CheckIn() {
+    const studentId = useSelector(state => state.auth.studentId);
+    const dispatch = useDispatch();
+
     const [checkins, setCheckins] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    async function loadCheckins() {
+    async function loadCheckins(id) {
         setLoading(true);
-        const response = await api.get(`students/${10}/checkins`);
+        const response = await api.get(`students/${id}/checkins`);
 
         const data = response.data.map(ck => ({
             ...ck,
@@ -35,12 +41,12 @@ export default function CheckIn() {
     }
 
     useEffect(() => {
-        loadCheckins();
-    }, []);
+        loadCheckins(studentId);
+    }, [studentId]);
 
     async function handleCheckin() {
         try {
-            await api.post(`students/${10}/checkins`);
+            await api.post(`students/${studentId}/checkins`);
             loadCheckins();
             Alert.alert('Sucesso', 'Check-in realizado com sucesso!');
         } catch (error) {
@@ -52,9 +58,14 @@ export default function CheckIn() {
         }
     }
 
+    function handleLogout() {
+        dispatch(signOut());
+    }
+
     return (
-        <Background>
-            <Container>
+        <Container>
+            <Header onLogout={handleLogout} />
+            <Content>
                 <CheckinButton onPress={handleCheckin}>
                     Novo check-in
                 </CheckinButton>
@@ -75,8 +86,8 @@ export default function CheckIn() {
                         )}
                     />
                 )}
-            </Container>
-        </Background>
+            </Content>
+        </Container>
     );
 }
 

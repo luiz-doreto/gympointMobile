@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import { Alert, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -7,6 +8,7 @@ import { Container, TextArea, SubmitButton } from './styles';
 import api from '~/services/api';
 
 export default function HelpOrderNew({ navigation }) {
+    const studentId = useSelector(state => state.auth.studentId);
     const [question, setQuestion] = useState('');
 
     async function handleSubmit() {
@@ -16,7 +18,7 @@ export default function HelpOrderNew({ navigation }) {
         }
 
         try {
-            await api.post(`students/${10}/help-orders`, { question });
+            await api.post(`students/${studentId}/help-orders`, { question });
             navigation.navigate('HelpOrderList');
         } catch (error) {
             Alert.alert(

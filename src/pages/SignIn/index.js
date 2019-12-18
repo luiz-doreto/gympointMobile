@@ -1,25 +1,19 @@
 import React, { useState } from 'react';
-import { Image, Alert } from 'react-native';
-import PropTypes from 'prop-types';
+import { Image } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 
 import logo from '~/assets/logo.png';
 import { Container, TextInput, SubmitButton } from './styles';
-import api from '~/services/api';
+import { signInRequest } from '~/store/modules/auth/actions';
 
-export default function SignIn({ navigation }) {
-    const [userId, setUserId] = useState('');
-    const [loading, setLoading] = useState(false);
+export default function SignIn() {
+    const [studentId, setStudentId] = useState('');
+
+    const loading = useSelector(state => state.auth.loading);
+    const dispatch = useDispatch();
 
     async function handleSignIn() {
-        setLoading(true);
-        try {
-            await api.post('/sessions/student', { id: userId });
-            setLoading(false);
-            navigation.navigate('CheckIn');
-        } catch (error) {
-            setLoading(false);
-            Alert.alert('Falha ao logar', 'Aluno não encontrado');
-        }
+        dispatch(signInRequest(studentId));
     }
 
     return (
@@ -29,8 +23,8 @@ export default function SignIn({ navigation }) {
                 autoCorrect={false}
                 autoCapitalize="none"
                 placeholder="Informe seu ID de cadastro"
-                value={userId}
-                onChangeText={setUserId}
+                value={studentId}
+                onChangeText={setStudentId}
             />
             <SubmitButton loadging={loading} onPress={handleSignIn}>
                 Entrar no sistema
@@ -38,9 +32,3 @@ export default function SignIn({ navigation }) {
         </Container>
     );
 }
-
-SignIn.propTypes = {
-    navigation: PropTypes.shape({
-        navigate: PropTypes.func,
-    }).isRequired,
-};
